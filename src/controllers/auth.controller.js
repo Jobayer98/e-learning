@@ -6,12 +6,48 @@ const signup = async (req, res, next) => {
     if (!name || !email || !password) {
       return res
         .status(400)
-        .json({ success: flase, msg: "Please enter all fields" });
+        .json({ success: false, msg: "Please enter all fields" });
     }
 
     const user = await User.create({ name, email, password });
 
-    res.status(201).json({ success: true, user });
+    const token = await user.generateToken();
+
+    res.status(201).json({ success: true, token });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const signin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Please enter all fields" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, msg: "Account does not exist" });
+    }
+
+    const isMatch = await user.comparePassword(password);
+
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Invalid credentials" });
+    }
+
+    const token = await user.generateToken();
+
+    res.status(200).json({ success: true, token });
   } catch (error) {
     next(error);
   }
@@ -19,4 +55,5 @@ const signup = async (req, res, next) => {
 
 module.exports = {
   signup,
+  signin,
 };

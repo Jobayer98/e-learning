@@ -54,6 +54,18 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// remove password
+
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+  delete userObject.password;
+  delete userObject.tokens;
+  delete userObject.role;
+  delete userObject.rating;
+  return userObject;
+};
+
 // compare password
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
