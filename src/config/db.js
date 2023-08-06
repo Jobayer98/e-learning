@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://localhost:27017/Elearning", {
+  .connect("mongodb://127.0.0.1:27017/Elearning", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
