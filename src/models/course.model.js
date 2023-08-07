@@ -51,11 +51,11 @@ const courseSchema = new mongoose.Schema({
     ref: "Student",
   },
 
-  // instructor: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
+  instructor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   reviews: [
     {
       type: String,
@@ -67,4 +67,6 @@ const courseSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Course", courseSchema);
+const Course = mongoose.model("Course", courseSchema);
+
+module.exports = Course;

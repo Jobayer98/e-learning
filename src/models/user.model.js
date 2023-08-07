@@ -45,6 +45,12 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+// userSchema.virtual("courses", {
+//   ref: "Course",
+//   localField: "_id",
+//   foreignField: "instructor",
+// });
+
 // hash password
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
@@ -86,4 +92,6 @@ userSchema.methods.generateToken = async function () {
   return token;
 };
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
