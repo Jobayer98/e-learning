@@ -13,7 +13,7 @@ const signup = async (req, res, next) => {
 
     const token = await user.generateToken();
 
-    res.status(201).json({ success: true, token });
+    res.status(201).json({ success: true, user, token });
   } catch (error) {
     next(error);
   }
@@ -47,7 +47,7 @@ const signin = async (req, res, next) => {
 
     const token = await user.generateToken();
 
-    res.status(200).json({ success: true, token });
+    res.status(200).json({ success: true, user, token });
   } catch (error) {
     next(error);
   }

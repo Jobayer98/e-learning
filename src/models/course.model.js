@@ -36,34 +36,35 @@ const courseSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    default: 0,
   },
   ratingCount: {
     type: Number,
-    required: true,
+    default: 0,
   },
   enrollStudents: {
     type: Number,
-    required: true,
+    default: 0,
   },
   enrolledByStudents: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Student",
-    required: true,
   },
 
-  instructor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Instructor",
-    required: true,
-  },
+  // instructor: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
   reviews: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Review",
+      type: String,
     },
   ],
-  timestamps: true,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Course", courseSchema);
