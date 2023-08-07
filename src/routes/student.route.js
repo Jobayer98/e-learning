@@ -1,16 +1,16 @@
 const express = require("express");
-
 const router = express.Router();
+const auth = require("../middlewares/auth.middleware");
+const {
+  enrollNewCourse,
+  myCourses,
+} = require("../controllers/user.controller");
 
 // get student enrolled courses
-router.route("/my-learning").get((req, res) => {
-  res.send("Student all courses");
-});
+router.route("/my-learning").get(auth, myCourses);
 
 // enroll a new course
-router.route("/add-course").post((req, res) => {
-  res.send("Student add course");
-});
+router.route("/courses/:courseId").post(auth, enrollNewCourse);
 
 // remove enrolled course
 router.route("/remove-course").delete((req, res) => {
