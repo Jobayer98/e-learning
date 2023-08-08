@@ -30,6 +30,18 @@ const myCourses = async (req, res, next) => {
   }
 };
 
+const viewCourse = async (req, res, next) => {
+  try {
+    const course = await Course.findById(req.params.courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, msg: "No course found" });
+    }
+    res.status(200).json({ success: true, course });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const unEnrollCourse = async (req, res, next) => {
   try {
     const course = await Course.findById(req.params.courseId);
@@ -164,6 +176,7 @@ const deleteReview = async (req, res, next) => {
 
 module.exports = {
   enrollNewCourse,
+  viewCourse,
   unEnrollCourse,
   myCourses,
   giveReview,

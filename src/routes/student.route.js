@@ -5,6 +5,7 @@ const express = require("express");
 const auth = require("../middlewares/auth.middleware");
 const {
   enrollNewCourse,
+  viewCourse,
   myCourses,
   giveReview,
   updateReview,
@@ -18,6 +19,7 @@ const router = express.Router();
 router.route("/my-learning").get(auth, myCourses);
 router
   .route("/courses/:courseId")
+  .get(auth, viewCourse)
   .post(auth, enrollNewCourse)
   .delete(auth, unEnrollCourse);
 
