@@ -19,7 +19,9 @@ const enrollNewCourse = async (req, res, next) => {
 
 const myCourses = async (req, res, next) => {
   try {
-    const courses = await Course.find({ enrolledByStudents: req.user._id });
+    const courses = await Course.find({
+      enrolledByStudents: req.user._id,
+    }).select("name price duration rating level -_id");
     if (!courses || courses.length === 0) {
       return res.status(404).json({ success: false, msg: "No courses found" });
     }
