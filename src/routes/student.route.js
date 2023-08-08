@@ -4,7 +4,9 @@ const auth = require("../middlewares/auth.middleware");
 const {
   enrollNewCourse,
   myCourses,
-} = require("../controllers/user.controller");
+  giveReview,
+  updateReview,
+} = require("../controllers/student.controller");
 
 // get student enrolled courses
 router.route("/my-learning").get(auth, myCourses);
@@ -16,5 +18,8 @@ router
   .delete((req, res) => {
     res.send("Student remove course");
   });
+
+router.route("/courses/:courseId/review").post(auth, giveReview);
+router.route("/courses/:courseId/reviews/:reviewId").patch(auth, updateReview);
 
 module.exports = router;

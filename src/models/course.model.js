@@ -49,6 +49,7 @@ const courseSchema = new mongoose.Schema({
   enrolledByStudents: [
     {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   ],
 
@@ -59,7 +60,16 @@ const courseSchema = new mongoose.Schema({
   },
   reviews: [
     {
-      type: String,
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      text: String,
+      rating: Number,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
   ],
   createdAt: {
