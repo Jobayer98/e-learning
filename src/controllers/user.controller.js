@@ -22,7 +22,8 @@ const myCourses = async (req, res, next) => {
     if (!courses || courses.length === 0) {
       return res.status(404).json({ success: false, msg: "No courses found" });
     }
-    res.status(200).json({ success: true, courses });
+    const enrolledCourses = courses.length;
+    res.status(200).json({ success: true, enrolledCourses, courses });
   } catch (error) {
     next(error);
   }

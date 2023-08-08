@@ -10,9 +10,9 @@ const app = express();
 
 // express middleware
 app.use(express.json());
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/student", studentRouter);
-app.use("/api/v1/instructor", instructorRouter);
+app.use("/api/v1", authRouter);
+app.use("/api/v1", studentRouter);
+app.use("/api/v1", instructorRouter);
 
 //express error handler
 app.use((err, req, res, next) => {

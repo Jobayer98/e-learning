@@ -10,11 +10,11 @@ const {
 router.route("/my-learning").get(auth, myCourses);
 
 // enroll a new course
-router.route("/courses/:courseId").post(auth, enrollNewCourse);
-
-// remove enrolled course
-router.route("/remove-course").delete((req, res) => {
-  res.send("Student remove course");
-});
+router
+  .route("/courses/:courseId")
+  .post(auth, enrollNewCourse)
+  .delete((req, res) => {
+    res.send("Student remove course");
+  });
 
 module.exports = router;

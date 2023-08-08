@@ -53,7 +53,18 @@ const signin = async (req, res, next) => {
   }
 };
 
+const logoutAll = async (req, res, next) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.status(200).json({ success: true, msg: "Logged out" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   signup,
   signin,
+  logoutAll,
 };
