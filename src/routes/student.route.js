@@ -1,5 +1,7 @@
+// external dependencies
 const express = require("express");
-const router = express.Router();
+
+// internal dependencies
 const auth = require("../middlewares/auth.middleware");
 const {
   enrollNewCourse,
@@ -7,16 +9,17 @@ const {
   giveReview,
   updateReview,
   deleteReview,
+  unEnrollCourse,
 } = require("../controllers/student.controller");
+
+const router = express.Router();
 
 // student routes
 router.route("/my-learning").get(auth, myCourses);
 router
   .route("/courses/:courseId")
   .post(auth, enrollNewCourse)
-  .delete((req, res) => {
-    res.send("Student remove course");
-  });
+  .delete(auth, unEnrollCourse);
 
 // review routes
 router.route("/courses/:courseId/review").post(auth, giveReview);

@@ -30,6 +30,29 @@ const myCourses = async (req, res, next) => {
   }
 };
 
+const unEnrollCourse = async (req, res, next) => {
+  try {
+    const course = await Course.findById(req.params.courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, msg: "No course found" });
+    }
+
+    const index = course.enrolledByStudents.indexOf(req.user._id);
+
+    if (index === -1) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "You are not enrolled in this course" });
+    }
+
+    course.enrolledByStudents.splice(index, 1);
+    await course.save();
+    res.status(200).json({ success: true, msg: "Course unenrolled" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const giveReview = async (req, res, next) => {
   const userReviews = Object.keys(req.body);
   const reviewAllowed = ["text", "rating"];
@@ -141,6 +164,7 @@ const deleteReview = async (req, res, next) => {
 
 module.exports = {
   enrollNewCourse,
+  unEnrollCourse,
   myCourses,
   giveReview,
   updateReview,
