@@ -5,11 +5,13 @@ const express = require("express");
 const authRouter = require("./routes/auth.route");
 const studentRouter = require("./routes/student.route");
 const instructorRouter = require("./routes/instructor.route");
+const publicRouter = require("./routes/public.route");
 
 const app = express();
 
 // express middleware
 app.use(express.json());
+app.use("/api/v1", publicRouter);
 app.use("/api/v1", authRouter);
 app.use("/api/v1", studentRouter);
 app.use("/api/v1", instructorRouter);
