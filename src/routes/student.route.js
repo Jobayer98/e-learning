@@ -6,12 +6,11 @@ const {
   myCourses,
   giveReview,
   updateReview,
+  deleteReview,
 } = require("../controllers/student.controller");
 
-// get student enrolled courses
+// student routes
 router.route("/my-learning").get(auth, myCourses);
-
-// enroll a new course
 router
   .route("/courses/:courseId")
   .post(auth, enrollNewCourse)
@@ -19,7 +18,11 @@ router
     res.send("Student remove course");
   });
 
+// review routes
 router.route("/courses/:courseId/review").post(auth, giveReview);
-router.route("/courses/:courseId/reviews/:reviewId").patch(auth, updateReview);
+router
+  .route("/courses/:courseId/reviews/:reviewId")
+  .patch(auth, updateReview)
+  .delete(auth, deleteReview);
 
 module.exports = router;

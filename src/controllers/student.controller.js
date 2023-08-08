@@ -110,9 +110,39 @@ const updateReview = async (req, res, next) => {
   }
 };
 
+const deleteReview = async (req, res, next) => {
+  try {
+    const course = await Course.findById(req.params.courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, msg: "No course found" });
+    }
+
+    const reviewIndex = course.reviews.findIndex(
+      (review) => review._id.toString() === req.params.reviewId
+    );
+
+    if (reviewIndex === -1) {
+      return res.status(404).json({ success: false, msg: "No review found" });
+    }
+
+    course.reviews.splice(reviewIndex, 1);
+    await course.save();
+
+    // Calculate average rating
+    if (course.reviews.length !== 0) {
+      calculateAverageRating(course);
+    }
+
+    res.status(200).json({ success: true, msg: "Review deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   enrollNewCourse,
   myCourses,
   giveReview,
   updateReview,
+  deleteReview,
 };
