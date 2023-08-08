@@ -1,4 +1,5 @@
 const Course = require("../models/course.model");
+const { calculateAverageRating } = require("../utils/calculateAverageRating");
 
 const enrollNewCourse = async (req, res, next) => {
   try {
@@ -56,8 +57,11 @@ const giveReview = async (req, res, next) => {
     };
 
     course.reviews.push(containReview);
-
     const review = await course.save();
+
+    // Calculate average rating
+    calculateAverageRating(course);
+
     res.status(201).json({ success: true, review });
   } catch (error) {
     next(error);
@@ -94,6 +98,9 @@ const updateReview = async (req, res, next) => {
     course.reviews[reviewIndex].rating = Number(req.body.rating);
 
     await course.save();
+
+    // Calculate average rating
+    calculateAverageRating(course);
 
     res
       .status(200)
