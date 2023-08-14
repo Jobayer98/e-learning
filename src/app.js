@@ -28,7 +28,7 @@ app.use(
   })
 );
 app.use("/api/v1", publicRouter);
-app.use("/api/v1", authRouter);
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1", studentRouter);
 app.use("/api/v1", instructorRouter);
 app.use("/api/v1", adminRouter);
