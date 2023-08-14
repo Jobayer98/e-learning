@@ -1,9 +1,7 @@
 // external dependencies
 const express = require("express");
-const upload = require("express-fileupload");
-const cloudinary = require("cloudinary").v2;
 
-// internal dependencies
+// all routes
 const authRouter = require("./routes/auth.route");
 const studentRouter = require("./routes/student.route");
 const instructorRouter = require("./routes/instructor.route");
@@ -12,21 +10,10 @@ const adminRouter = require("./routes/admin.route");
 
 const app = express();
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
 // express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  upload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-);
+
 app.use("/api/v1", publicRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1", studentRouter);
