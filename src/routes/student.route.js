@@ -18,7 +18,7 @@ const router = express.Router();
 // student routes
 router.route("/my-learning").get(auth, myCourses);
 router
-  .route("/courses/:courseId")
+  .route("/my-learning/:courseId")
   .get(auth, viewCourse)
   .post(auth, enrollNewCourse)
   .delete(auth, unEnrollCourse);
