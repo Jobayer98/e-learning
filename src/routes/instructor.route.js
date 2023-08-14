@@ -10,10 +10,10 @@ const {
 
 const router = express.Router();
 
-router.route("/course").post(auth, isInstructor, addCourse);
-router.route("/courses").get(auth, isInstructor, myCourses);
+router.route("/my-course").post(auth, isInstructor, addCourse);
+router.route("/my-courses").get(auth, isInstructor, myCourses);
 router
-  .route("courses/:courseId")
+  .route("my-courses/:courseId")
   .patch(auth, isInstructor, updateCourse)
   .delete(auth, isInstructor, removeCourse);
 
