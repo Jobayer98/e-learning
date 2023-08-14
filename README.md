@@ -46,10 +46,12 @@ Welcome to the E-Learning repository! This project is built using Node.js, Expre
    npm start
    
 
-## API Endpoints
+## API Endpoints 
+
+  - /api/v1/courses: Show all course without authentication.
   - /api/v1/auth: Authentication and user registration (/signup, /signin, /logout).
-  - /api/v1/my-learning: Student enrolled courses.
-  - /api/v1/courses: CRUD operations for courses (Instructor only).
+  - /api/v1/my-learning: Student enrolled courses (Student only).
+  - /api/v1/my-courses: CRUD operations for courses (Instructor only).
   - /api/v1/users: Manage users (Admin only).
 
 ## Technologies Used
