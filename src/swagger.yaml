@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: E-Learning App
-  description: E-Learning App API
+  description: E-Learning s a comprehensive e-learning platform designed to provide a seamless and engaging learning experience for users of all levels and backgrounds. With a focus on user authentication and authorization, our app ensures the security and privacy of every user.
   version: 1.0.0
 
 servers:
