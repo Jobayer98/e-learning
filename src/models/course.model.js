@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const { v4: uuid } = require('uuid');
 
 const courseSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+    default: uuid(),
+  },
   name: {
     type: String,
     trim: true,
@@ -17,7 +22,7 @@ const courseSchema = new mongoose.Schema({
   //     required: true,
   //   },
   duration: {
-    type: Number,
+    type: String,
     required: true,
   },
   price: {

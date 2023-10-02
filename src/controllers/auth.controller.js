@@ -44,7 +44,7 @@ const signin = async (req, res, next) => {
         .status(400)
         .json({ success: false, msg: "Invalid credentials" });
     }
-
+    
     const token = await user.generateToken();
 
     res.status(200).json({ success: true, user, token });

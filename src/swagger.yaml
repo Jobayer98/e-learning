@@ -1,0 +1,494 @@
+openapi: 3.0.0
+info:
+  title: E-Learning App
+  description: E-Learning App API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:9000/api/v1
+    description: Development server
+
+
+tags:
+  - name: Course
+    description: Find out all courses
+  - name: Auth
+    description: Authentication
+  - name: Admin
+    description: Admin
+  - name: Student
+    description: Student
+  - name: Instructor
+    description: Instructor
+  - name: Review
+    description: Review a course
+
+paths:
+  /auth/signup:
+    post:
+      summary: Create a new user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        description: Create user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+  /auth/signin:
+    post:
+      summary: Sign in user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        description: Create user object
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  example: password
+              
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+  /auth/logout:
+    post:
+      security: 
+        - bearerAuth: []
+      summary: Sign out user
+      tags:
+        - Auth
+      responses:
+        200:
+          description: successful operation
+        500:
+          description: Internal server error
+
+  /courses:
+    get:
+      summary: Get all courses
+      tags: [Course]
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+  /courses/{courseId}:
+    get:
+      summary: Get course by id
+      tags: [Course]
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        500:
+          description: Internal server error
+    post:
+      security: 
+        - bearerAuth: []
+      summary: Enroll a new course by a student
+      tags:
+        - Course
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /my-courses:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: Get all courses
+      tags: [Student]
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+        500:
+          description: Internal server error
+  /my-courses/{courseId}:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: Get course by id
+      tags: [Student]
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        500:
+          description: Internal server error
+    delete:
+      security: 
+        - bearerAuth: []
+      summary: Delete existing course
+      tags: [Student]
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        500:
+          description: Internal server error
+  /my-courses/{courseId}/review:
+    post:
+      security: 
+        - bearerAuth: []
+      summary: Review a course
+      tags:
+        - Review
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Create review object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+      responses:
+        200:
+          description: successful operation
+          content:
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+  /my-courses/{courseId}/review/{reviewId}/review:
+    patch:
+      security: 
+        - bearerAuth: []
+      summary: Update existing review
+      tags:
+        - Review
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: reviewId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Create review object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+      responses:
+        200:
+          description: successful operation
+          content:
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+    delete:
+      security: 
+        - bearerAuth: []
+      summary: Delete existing review
+      tags:
+        - Review
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: reviewId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        500:
+          description: Internal server error
+
+  /instructor/course:
+    post:
+      security: 
+        - bearerAuth: []
+      summary: Create a new course by an instructor
+      tags:
+        - Instructor
+      requestBody:
+        required: true
+        description: Create course object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+  /instructor/courses:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: Get all courses
+      tags: [Instructor]
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+        500:
+          description: Internal server error
+  /instructor/courses/{courseId}:
+    patch:
+      security: 
+        - bearerAuth: []
+      summary: Update existing course by an instructor
+      tags:
+        - Instructor
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Create course object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        500:
+          description: Internal server error
+    delete:
+      security: 
+        - bearerAuth: []
+      summary: Delete existing course by an instructor
+      tags:
+        - Instructor
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        500:
+          description: Internal server error
+
+  /users:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: Get all users
+      tags: [Admin]
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        500:
+          description: Internal server error
+  /users/{userId}:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: Get user by id
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        500:
+          description: Internal server error
+    delete:
+      security: 
+        - bearerAuth: []
+      summary: Delete existing user
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+        500:
+          description: Internal server error
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John
+        email:
+          type: string
+          format: email
+          example: john@example.com
+        password:
+          type: string
+          example: password
+
+    Course:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Java
+        description:
+          type: string
+          example: Java course
+        duration:
+          type: string
+          example: 2 hr
+        price:
+          type: float
+          format: float
+          example: 120.00
+        category:
+          type: string
+          example: Programming
+        level:
+          type: string
+          example: Beginner
+
+    Review:
+      type: object
+      properties:
+        text:
+          type: string
+        rating:
+          type: number
+          format: float
+          example: 4.5
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
