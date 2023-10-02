@@ -3,6 +3,7 @@ const express = require("express");
 const swaggerUi = require('swagger-ui-express');
 const fs = require("fs")
 const YAML = require('yaml')
+const cors = require("cors");
 
 const path = require('path');
 const file = fs.readFileSync(path.join(__dirname, './swagger.yaml'), 'utf8');
@@ -17,6 +18,7 @@ const app = express();
 
 // express middleware
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
