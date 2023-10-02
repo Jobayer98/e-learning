@@ -87,7 +87,7 @@ e-learning-platform/
 
 ## Getting Help
 
-If you encounter any issues or have questions, please feel free to open an issue in this repository. We're here to help!
+If you encounter any issues or have questions, please feel free to open an issue in this repository. I'm here to help!
 
 ## Author
 
