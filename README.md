@@ -1,4 +1,4 @@
-# E-Learning
+# E-Learning API
 
 [API Link](https://jobayer98.github.io/e-learning/)
 
