@@ -7,9 +7,8 @@ const auth = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
-router.route("/auth/signup").post(signup);
-router.route("/auth/signin").post(signin);
-router.route("/auth/logout").post(auth, logoutAll);
-router.route("/auth/reset-password").post();
+router.route("/signup").post(signup);
+router.route("/signin").post(signin);
+router.route("/logout").post(auth, logoutAll);
 
 module.exports = router;

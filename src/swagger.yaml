@@ -246,8 +246,6 @@ paths:
         - in: path
           name: courseId
           required: true
-          schema:
-            type: string
         - in: path
           name: reviewId
           required: true
